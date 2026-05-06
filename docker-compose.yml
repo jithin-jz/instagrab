@@ -1,4 +1,20 @@
 services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: instagrab-postgres
+    environment:
+      POSTGRES_DB: instagrab
+      POSTGRES_USER: instagrab
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U instagrab -d instagrab"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   instagrab:
     build:
       context: .
@@ -8,11 +24,12 @@ services:
     env_file:
       - .env
     environment:
-      DATABASE_PATH: /data/instagrab.db
+      DATABASE_URL: postgresql://instagrab:${POSTGRES_PASSWORD:-changeme}@postgres:5432/instagrab
     ports:
       - "8000:8000"
-    volumes:
-      - instagrab_data:/data
+    depends_on:
+      postgres:
+        condition: service_healthy
     restart: unless-stopped
 
   instagrab-dev:
@@ -24,12 +41,14 @@ services:
     env_file:
       - .env
     environment:
-      DATABASE_PATH: /data/instagrab.db
+      DATABASE_URL: postgresql://instagrab:${POSTGRES_PASSWORD:-changeme}@postgres:5432/instagrab
     ports:
       - "8000:8000"
     volumes:
-      - instagrab_data:/data
       - .:/app
+    depends_on:
+      postgres:
+        condition: service_healthy
     command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
     profiles:
       - dev
@@ -43,12 +62,24 @@ services:
     env_file:
       - .env
     environment:
-      DATABASE_PATH: /tmp/test.db
+      DATABASE_URL: postgresql://instagrab:${POSTGRES_PASSWORD:-changeme}@postgres-test:5432/instagrab_test
     volumes:
       - .:/app
+    depends_on:
+      - postgres-test
     command: pytest tests/ -v
     profiles:
       - test
 
+  postgres-test:
+    image: postgres:16-alpine
+    container_name: postgres-test
+    environment:
+      POSTGRES_DB: instagrab_test
+      POSTGRES_USER: instagrab
+      POSTGRES_PASSWORD: changeme
+    profiles:
+      - test
+
 volumes:
-  instagrab_data:
+  postgres_data:

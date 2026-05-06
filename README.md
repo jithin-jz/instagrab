@@ -14,6 +14,7 @@ A FastAPI application that receives Instagram mention webhooks, downloads tagged
 - **Rate Limiting**: Prevents abuse with configurable rate limits
 - **Admin Commands**: Stats, logs, and user management for admins
 - **Scheduled Tasks**: Automatic follower sync, token health checks, and cleanup
+- **Scalable Database**: PostgreSQL for handling 10,000+ users
 
 ## Tech Stack
 
@@ -21,7 +22,7 @@ A FastAPI application that receives Instagram mention webhooks, downloads tagged
 - **python-telegram-bot**: Telegram bot API
 - **yt-dlp**: Media downloader
 - **APScheduler**: Task scheduling
-- **SQLite**: Database (persisted in Docker volume)
+- **PostgreSQL**: Production database for high concurrency
 - **Docker**: Containerization
 
 ## Prerequisites
@@ -53,6 +54,8 @@ Required variables in `.env`:
 - `TG_BOT_TOKEN`: Telegram bot token from @BotFather
 - `ADMIN_TELEGRAM_ID`: Your Telegram chat ID
 - `BASE_URL`: Your public HTTPS domain or ngrok URL
+- `DATABASE_URL`: PostgreSQL connection URL
+- `POSTGRES_PASSWORD`: PostgreSQL database password
 
 Optional variables:
 - `TG_LOCAL_SERVER_URL`: Local Bot API server URL for large file support

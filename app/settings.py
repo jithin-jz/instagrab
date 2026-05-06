@@ -33,6 +33,7 @@ class Settings(BaseSettings):
 
     BASE_URL: str = ""
     DATABASE_PATH: Path = Field(default=Path("instagrab.db"))
+    DATABASE_URL: str = "postgresql://user:password@localhost:5432/instagrab"
 
     MAX_CONCURRENT_DOWNLOADS: int = 3
     RATE_LIMIT_SECONDS: int = 60

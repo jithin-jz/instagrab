@@ -7,13 +7,13 @@
 3. Set the token in `.env`:
 
    ```text
-   TG_BOT_TOKEN=1234567890:AAExampleTokenWithLettersAndNumbers
+   TG_BOT_TOKEN=your_bot_token_here
    ```
 
 4. Get your personal Telegram chat ID:
 
    - Send any message to your new bot.
-   - Visit `https://api.telegram.org/bot8694380844:AAEyFvElFXjy7ev1chWqEw2532D-znRPkgY/getUpdates`.
+   - Visit `https://api.telegram.org/bot<YOUR_BOT_TOKEN>/getUpdates`.
    - Find the JSON object with `"chat":{"id": YOUR_ID}`.
 
 5. Set the admin chat ID in `.env`:

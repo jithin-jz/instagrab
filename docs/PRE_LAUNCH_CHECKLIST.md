@@ -1,0 +1,39 @@
+# Pre-launch Checklist
+
+- [ ] Instagram account is a Business or Creator account.
+- [ ] Instagram account is linked to the correct Facebook Page.
+- [ ] Meta app has Instagram Graph API enabled.
+- [ ] Meta app has `instagram_basic`, `instagram_manage_comments`, and `pages_read_engagement` permissions.
+- [ ] Meta app webhook callback URL points to `https://your-domain.com/webhook`.
+- [ ] Meta webhook verify token exactly matches `IG_VERIFY_TOKEN`.
+- [ ] Meta webhook is subscribed to Instagram `mentions`.
+- [ ] App Review is complete if required for production use.
+- [ ] `IG_APP_ID` is set in `.env`.
+- [ ] `IG_APP_SECRET` is set in `.env`.
+- [ ] `IG_ACCESS_TOKEN` is a long-lived token.
+- [ ] `IG_BUSINESS_ID` is the Instagram Business Account ID, not the Page ID.
+- [ ] Telegram bot token from `@BotFather` is set as `TG_BOT_TOKEN`.
+- [ ] Admin Telegram chat ID is set as `ADMIN_TELEGRAM_ID`.
+- [ ] Local Bot API server is running if `TG_LOCAL_SERVER_URL=http://localhost:8081`.
+- [ ] Server has Python 3.11 or newer.
+- [ ] Dependencies install cleanly with `pip install -r requirements.txt`.
+- [ ] `uvicorn app.main:app --host 0.0.0.0 --port 8000` starts without errors.
+- [ ] `/health` returns `status: running`.
+- [ ] Startup follower sync completes successfully.
+- [ ] Telegram `/start` registration flow saves a user.
+- [ ] Telegram `/me` shows the linked Instagram account.
+- [ ] Admin `/stats`, `/logs`, and `/users` work only for `ADMIN_TELEGRAM_ID`.
+- [ ] A test webhook with a valid HMAC returns `{"status":"ok"}`.
+- [ ] Invalid webhook HMACs are rejected with HTTP 401.
+- [ ] Duplicate media IDs are skipped.
+- [ ] Non-followers are marked as `not_follower`.
+- [ ] Followers without Telegram registration are marked as `not_registered`.
+- [ ] Rate limit warning appears when one user requests twice within 60 seconds.
+- [ ] Direct CDN download works for a readable media URL.
+- [ ] yt-dlp fallback works for an Instagram permalink.
+- [ ] Oversized files send a Telegram warning instead of crashing.
+- [ ] Successful deliveries increment `total_delivered`.
+- [ ] Logs appear in console and in the `logs` table.
+- [ ] Scheduled follower sync, token health check, token refresh, and cleanup jobs are registered.
+- [ ] Database file is stored on persistent disk in production.
+- [ ] HTTPS endpoint is reachable from Meta's webhook servers.

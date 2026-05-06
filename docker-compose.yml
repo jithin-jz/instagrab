@@ -1,0 +1,54 @@
+services:
+  instagrab:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: instagrab
+    env_file:
+      - .env
+    environment:
+      DATABASE_PATH: /data/instagrab.db
+    ports:
+      - "8000:8000"
+    volumes:
+      - instagrab_data:/data
+    restart: unless-stopped
+
+  instagrab-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    container_name: instagrab-dev
+    env_file:
+      - .env
+    environment:
+      DATABASE_PATH: /data/instagrab.db
+    ports:
+      - "8000:8000"
+    volumes:
+      - instagrab_data:/data
+      - .:/app
+    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+    profiles:
+      - dev
+
+  instagrab-test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    container_name: instagrab-test
+    env_file:
+      - .env
+    environment:
+      DATABASE_PATH: /tmp/test.db
+    volumes:
+      - .:/app
+    command: pytest tests/ -v
+    profiles:
+      - test
+
+volumes:
+  instagrab_data:

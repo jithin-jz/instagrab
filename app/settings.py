@@ -19,7 +19,6 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
-    IG_APP_ID: str = ""
     IG_APP_SECRET: str = ""
     IG_VERIFY_TOKEN: str = ""
     IG_ACCESS_TOKEN: str = ""
@@ -32,7 +31,6 @@ class Settings(BaseSettings):
     ADMIN_TELEGRAM_ID: str = ""
 
     BASE_URL: str = ""
-    DATABASE_PATH: Path = Field(default=Path("instagrab.db"))
     DATABASE_URL: str = Field(default="postgresql://instagrab@localhost:5432/instagrab")
 
     MAX_CONCURRENT_DOWNLOADS: int = 3

@@ -1,5 +1,8 @@
 # Instagrab
 
+> [!CAUTION]
+> **PROJECT DISCONTINUED**: This project is no longer maintained due to changes in Meta's privacy policy and Instagram Graph API restrictions.
+
 Instagram → Telegram Delivery Bot
 
 A FastAPI application that receives Instagram mention webhooks, downloads tagged media, and forwards it privately to registered Telegram users.

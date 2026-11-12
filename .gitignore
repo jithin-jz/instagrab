@@ -15,3 +15,7 @@ dist/
 build/
 .coverage
 htmlcov/
+
+# Secrets (never commit)
+.env.*
+!.env.example
